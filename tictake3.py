@@ -65,6 +65,21 @@ def turn(count):
         board_spaces[move] = "{}".format(player)
 
 
+def win_check(board_spaces):
+    if [board_spaces[space] for space in [0, 1, 2]] == ["X", "X", "X"]:
+        print("X wins!")
+    elif [board_spaces[space] for space in [0, 1, 2]] == ["O", "O", "O"]:
+        print("O wins!")
+    elif [board_spaces[space] for space in [3, 4, 5]] == ["X", "X", "X"]:
+        print("X wins!")
+    elif [board_spaces[space] for space in [3, 4, 5]] == ["O", "O", "O"]:
+        print("O wins!")
+    elif [board_spaces[space] for space in [6, 7, 8]] == ["X", "X", "X"]:
+        print("X wins!")
+    elif [board_spaces[space] for space in [6, 7, 8]] == ["X", "X", "X"]:
+        print("O wins!")
+
+
 def game_play():
     playing = True
     count = 0
@@ -73,6 +88,7 @@ def game_play():
         count += 1
         turn(count)
         board_update(board_overlay)
+        win_check(board_spaces)
         if count > 8:
             playing = False
 
