@@ -11,9 +11,12 @@ board_overlay = """
 # print(board_overlay)
 
 
+def game_set_up():
+    board_spaces = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    game_play(board_spaces)
+
 # beware the non reseting board
 
-board_spaces = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
 # print(board_spaces)
 #
@@ -28,7 +31,7 @@ board_spaces = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 # print(board_overlay.format(*board_spaces))
 
 
-def board_update(board_overlay):
+def board_update(board_overlay, board_spaces):
     print(board_overlay.format(*board_spaces))
     return board_overlay.format(*board_spaces)
 
@@ -54,7 +57,7 @@ def x_or_o(count):
 # def move_select(player):
 
 
-def turn(count):
+def turn(count, board_spaces):
     player = x_or_o(count)
     print("{} turn.".format(player))
     move = int(input("Pick a box: "))
@@ -70,12 +73,14 @@ def end_game():
     again = input("Do you want to play again? Y/n: ").lower()
     if again == "n":
         print("Goodbye")
-        playing = False
+        return False
     else:
-        game_play()
+        # game_play(board_spaces)
+        game_set_up()
 
 
 def win_check(board_spaces):
+    print("win check")
     if [board_spaces[space] for space in [0, 1, 2]] == ["X", "X", "X"]:
         print("X wins!")
         end_game()
@@ -94,18 +99,22 @@ def win_check(board_spaces):
     elif [board_spaces[space] for space in [6, 7, 8]] == ["O", "O", "O"]:
         print("O wins!")
         end_game()
+    else:
+        return True
 
 
-def game_play():
+def game_play(board_spaces):
     playing = True
     count = 0
-    board_update(board_overlay)
-    board_spaces = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    # board_spaces = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    board_update(board_overlay, board_spaces)
     while playing:
         count += 1
-        turn(count)
-        board_update(board_overlay)
-        win_check(board_spaces)
+        turn(count, board_spaces)
+        board_update(board_overlay, board_spaces)
+        playing = win_check(board_spaces)
+    else:
+        print("GG")
 
 # def check_wins():
 #     if
@@ -119,4 +128,5 @@ def game_play():
 #     while winning == False:
 #         winning = check_wins()
 
-game_play()
+game_set_up()
+# game_play(board_spaces)
