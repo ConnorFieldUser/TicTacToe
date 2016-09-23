@@ -61,9 +61,12 @@ def turn(count, board_spaces):
     player = x_or_o(count)
     print("{} turn.".format(player))
     move = int(input("Pick a box: "))
-    if board_spaces[move] == "X" or board_spaces[move] == "O":
+    if move not in [0, 1, 2, 3, 4, 5, 6, 7, 8]:
+        print("0-8")
+        turn(count, board_spaces)
+    elif board_spaces[move] == "X" or board_spaces[move] == "O":
         print("Already taken")
-        turn(count)
+        turn(count, board_spaces)
     else:
         board_spaces[move] = "{}".format(player)
 
@@ -72,7 +75,6 @@ def end_game():
     print("Game over!")
     again = input("Do you want to play again? Y/n: ").lower()
     if again == "n":
-        print("Goodbye")
         return False
     else:
         # game_play(board_spaces)
@@ -80,7 +82,6 @@ def end_game():
 
 
 def win_check(board_spaces):
-    print("win check")
     if [board_spaces[space] for space in [0, 1, 2]] == ["X", "X", "X"]:
         print("X wins!")
         end_game()
@@ -99,6 +100,31 @@ def win_check(board_spaces):
     elif [board_spaces[space] for space in [6, 7, 8]] == ["O", "O", "O"]:
         print("O wins!")
         end_game()
+
+    elif [board_spaces[space] for space in [0, 3, 6]] == ["X", "X", "X"]:
+        print("X wins!")
+        end_game()
+    elif [board_spaces[space] for space in [0, 3, 6]] == ["O", "O", "O"]:
+        print("O wins!")
+        end_game()
+    elif [board_spaces[space] for space in [1, 4, 7]] == ["X", "X", "X"]:
+        print("X wins!")
+        end_game()
+    elif [board_spaces[space] for space in [1, 4, 7]] == ["O", "O", "O"]:
+        print("O wins!")
+        end_game()
+    elif [board_spaces[space] for space in [2, 5, 8]] == ["X", "X", "X"]:
+        print("X wins!")
+        end_game()
+    elif [board_spaces[space] for space in [2, 5, 8]] == ["O", "O", "O"]:
+        print("O wins!")
+        end_game()
+
+    elif [board_spaces[space] for space in [0, 4, 8]] == ["X", "X", "X"]:
+        print("X wins diagonally!")
+    elif [board_spaces[space] for space in [0, 4, 8]] == ["O", "O", "O"]:
+        print("O wins diagonally!")
+
     else:
         return True
 
@@ -114,7 +140,7 @@ def game_play(board_spaces):
         board_update(board_overlay, board_spaces)
         playing = win_check(board_spaces)
     else:
-        print("GG")
+        print("Goodbye")
 
 # def check_wins():
 #     if
