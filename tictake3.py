@@ -81,7 +81,9 @@ def end_game():
         game_set_up()
 
 
-def win_check(board_spaces):
+def win_check(board_spaces, winner):
+    winner = True
+    return winner
     if [board_spaces[space] for space in [0, 1, 2]] == ["X", "X", "X"]:
         print("X wins!")
         end_game()
@@ -126,21 +128,29 @@ def win_check(board_spaces):
         print("O wins diagonally!")
 
     else:
+        winner = False
+        return winner
         return True
 
 
 def game_play(board_spaces):
     playing = True
+    xwins = False
+    owins = False
     count = 0
+    winner = False
     # board_spaces = [0, 1, 2, 3, 4, 5, 6, 7, 8]
     board_update(board_overlay, board_spaces)
     while playing:
         count += 1
         turn(count, board_spaces)
         board_update(board_overlay, board_spaces)
-        playing = win_check(board_spaces)
+        playing = win_check(board_spaces, winner)
+        if count == 9 and not xwins and not owins:
+            print("Draw")
+            playing = False
     else:
-        print("Goodbye")
+        end_game()
 
 # def check_wins():
 #     if
